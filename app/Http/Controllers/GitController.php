@@ -15,7 +15,8 @@ class GitController extends Controller
 		$output = $secret;
 		if($request->has('ref') && $request->input('ref') === "refs/heads/master" && $secret === $gitkey)
 		{
-			$output = shell_exec("/usr/bin/git pull origin master");
+			shell_exec("/usr/bin/git pull origin master");
+			$output = 'Success!!!!';
 		}
 		return $output;
 	}
