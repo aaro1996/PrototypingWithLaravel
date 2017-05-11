@@ -23,7 +23,7 @@ class GitController extends Controller
 		}
 		return ("Secret was: " . $secret . " Gitkey was: " . $gitkey . "\n" . 
 			(isset($_POST['ref']) ? "Request had ref" : "Request didn't have ref") . "\n" . 
-			($_POST['ref'] === "refs/heads/master" ? "Request was master" : "Request was not master") . "\n" .
+			(isset($_POST['ref']) && $_POST['ref'] === "refs/heads/master" ? "Request was master" : "Request was not master") . "\n" .
 			( md5($secret) === md5($gitkey) ? "Keys were equal" : "Keys weren't equal")
 			);
 	}
