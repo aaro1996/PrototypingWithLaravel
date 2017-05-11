@@ -11,3 +11,5 @@ npm-debug.log
 .env
 .gitattributes
 app/Http/Controllers/GitController.php
+/public/css/app.css
+/public/js/app.js
