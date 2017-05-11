@@ -17,7 +17,9 @@ class GitController extends Controller
 			$output = 'nokey';
 		}
 		$json = json_decode($input);
-		if(isset($json['ref']) && $json['ref'] === "refs/heads/master" && md5($secret) === md5($gitkey))
+		if(isset($json['ref']) 
+			&& $json['ref'] === 'refs/heads/master' 
+			&& md5($secret) === md5($gitkey))
 		{
 			shell_exec("/usr/bin/git pull origin master");
 			return 'Success!!!!';
