@@ -16,7 +16,7 @@ class GitController extends Controller
 		{
 			$output = shell_exec("/usr/bin/git pull origin master");
 		}
-		return 
+		return $output;
 	}
 
 }
