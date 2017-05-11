@@ -21,8 +21,8 @@ class GitController extends Controller
 			&& $json['ref'] === 'refs/heads/master' 
 			&& md5($secret) === md5($gitkey))
 		{
-			shell_exec("/usr/bin/git pull origin master");
-			return 'Success!!!!';
+			
+			return `/usr/bin/git pull origin master`;
 		}
 		return ("Secret was: " . $secret . " Gitkey was: " . $gitkey . "\n" . 
 			(isset($json['ref']) ? "Request had ref" : "Request didn't have ref") . "\n" . 
