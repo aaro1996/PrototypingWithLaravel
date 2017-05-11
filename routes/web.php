@@ -11,6 +11,9 @@
 |
 */
 
+
+Route::post('/githook', 'GitController@gitpull');
+
 Route::get('/', function () {
     return view('legacy.index');
 });
@@ -19,4 +22,3 @@ Route::get('/jdlink', function () {
     return view('legacy.jdlink');
 });
 
-Route::post('/githook', 'GitController@gitpull');
