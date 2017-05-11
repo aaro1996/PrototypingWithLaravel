@@ -21,4 +21,3 @@ Route::get('/', function () {
 Route::get('/jdlink', function () {
     return view('legacy.jdlink');
 });
-
