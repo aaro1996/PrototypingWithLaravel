@@ -20,7 +20,7 @@ class GitController extends Controller
 			shell_exec("/usr/bin/git pull origin master");
 			return 'Success!!!!';
 		}
-		return ("Secret was: " + $secret + " Gitkey was: " + $gitkey);
+		return ("Secret was: " . $secret . " Gitkey was: " . $gitkey);
 	}
 
 }
