@@ -16,7 +16,7 @@ class GitController extends Controller
 		if ($secret == null) {
 			$output = 'nokey';
 		}
-		$json = json_decode($input);
+		$json = json_decode($input, true);
 		if(isset($json['ref']) 
 			&& $json['ref'] === 'refs/heads/master' 
 			&& md5($secret) === md5($gitkey))
