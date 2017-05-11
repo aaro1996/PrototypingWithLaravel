@@ -10,9 +10,9 @@ class GitController extends Controller
 {
 	public function gitpull(Request $request) {
 		$gitkey = "testkey";
-		$secret = $request->input('refs.secret');
+		$secret = $request->input('hook.secret');
 		$output = $secret;
-		if($request->isMethod('post') && $request->has('ref') && $request->input('ref') === "refs/heads/master" && $secret === $gitkey)
+		if($request->has('ref') && $request->input('ref') === "refs/heads/master" && $secret === $gitkey)
 		{
 			$output = shell_exec("/usr/bin/git pull origin master");
 		}
