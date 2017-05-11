@@ -20,7 +20,11 @@ class GitController extends Controller
 			shell_exec("/usr/bin/git pull origin master");
 			return 'Success!!!!';
 		}
-		return ("Secret was: " . $secret . " Gitkey was: " . $gitkey);
+		return ("Secret was: " . $secret . " Gitkey was: " . $gitkey . "\n" . 
+			($request->has('ref') ? "Request had ref" : "Request didn't have ref") . "\n" . 
+			($request->input('ref') === "refs/heads/master" ? "Request was master" : "Request was not master") . "\n" .
+			( md5($secret) === md5($gitkey) ? "Keys were equal" : "Keys weren't equal")
+			);
 	}
 
 }
