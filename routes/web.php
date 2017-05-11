@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('/jdlink', function () {
     return view('legacy.jdlink');
 });
+
+Route::get('/testsquare', function() {
+	return view('gameboard.implementations.testsquare');
+});

@@ -31,5 +31,4 @@ class GitController extends Controller
 			( md5($secret) === md5($gitkey) ? "Keys were equal" : "Keys weren't equal")
 			);
 	}
-
 }
