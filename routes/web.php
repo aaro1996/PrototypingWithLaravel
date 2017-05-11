@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('legacy.index');
+});
+
+Route::get('/jdlink', function () {
+    return view('legacy.jdlink');
 });
