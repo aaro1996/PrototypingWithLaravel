@@ -10,9 +10,9 @@ class GitController extends Controller
 {
 	public function gitpull(Request $request) {
 		$gitkey = "testkey";
-		$secret = $request->input('hook.secret');
+		$secret = getallheaders()['X-Hub-Signature'];
 		$output = $secret;
-		if ($request->input('hook.secret') !== $gitkey) {
+		if ($secret == null) {
 			$output = 'nokey';
 		}
 		if($request->has('ref') && $request->input('ref') === "refs/heads/master" && $secret === $gitkey)
