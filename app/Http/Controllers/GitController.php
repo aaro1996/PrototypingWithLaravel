@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class GitController extends Controller
 {
 	public function gitpull(Request $request) {
-		$gitkey = hash_hmac("sha1", $request->all(),"testkey");
+		$gitkey = hash_hmac("sha1", file_get_contents("php://input"),"testkey");
 		$secret = getallheaders()['X-Hub-Signature'];
 		$output = $secret;
 		if ($secret == null) {
