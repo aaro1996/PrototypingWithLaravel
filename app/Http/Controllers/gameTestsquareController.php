@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\GameTestsquare
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,8 +29,9 @@ class gameTestsquareController extends Controller
     	if (Auth::check()) {
     		return view('layouts.creategame', ['gamename' => 'testsquare']);
     	} else {
-    		return route('home');
+    		return redirect()->route('home');
     	}
+    	return redirect()->route('home');
     }
 
     /**
@@ -39,6 +42,16 @@ class gameTestsquareController extends Controller
      */
     public function store(Request $request)
     {
+    	if(Auth::check()) {
+    		if ($request->has('name')) {
+    			$game = new GameTestsquare;
+    			$game->name = $request->name;
+    			$spell->save();
+    			return redirect()->route('/play/testsquare.show', ['id' => $spell->id]);
+    		} else {
+    			return back();
+    		}
+    	}
     }
 
     /**
@@ -49,6 +62,10 @@ class gameTestsquareController extends Controller
      */
     public function show($id)
     {
+    	if(Auth::check()) {
+
+    	}
+    	return redirect()->route('home');
     }
 
     /**
