@@ -11,6 +11,7 @@ npm-debug.log
 .env
 .gitattributes
 app/Http/Controllers/GitController.php
-public/css/*
-public/js/*
-public/fonts
+/public/css
+/public/js
+/public/fonts
+/public/mix-manifest.json
