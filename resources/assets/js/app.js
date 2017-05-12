@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('squareboard', require('./components/Squareboard.vue'));
 
 const app = new Vue({
     el: '#app'

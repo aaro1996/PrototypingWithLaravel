@@ -1,4 +1,4 @@
-<table>
+<table class="gameboard" id="{{$board_id}}">
 	@for($i = 0; $i < $y_count; $i++)
 		<tr>
 			@for($j = 0; $j < $x_count; $j++)

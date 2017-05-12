@@ -1,17 +1,27 @@
-<table class="gameboard">
-	@for($i = 0; $i < $y_count; $i++)
-		<tr>
-			@for($j = 0; $j < $x_count; $j++)
-				<td>
-					@include('gameboard.framework.tiles.square', ['x' => $j, 'y' => $i])
-				</td>
-			@endfor
+<template>
+	<table class="gameboard">
+		<tr v-for="row in rows">
+			<td v-for="cell in row">
+				<div :class="'square_tile x_' + cell.x + ' y_' + cell.y">
+					<div>
+						<p> x: {{cell.x}} y: {{cell.y}} </p>
+					</div>
+				</div>
+			</td>
 		</tr>
-	@endfor
-</table>
+	</table>
+</template>
 
-<div class="square_tile x_{{$x}} y_{{$y}}">
-	<div>
-		<p> x: {{$x}} y: {{$y}} </p>
-	</div>
-</div>
+<script>
+export default {
+	data: function() {
+		return {
+
+		}
+	},
+	props: ['rows'],
+	methods: {
+
+	},
+}
+</script>
