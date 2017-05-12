@@ -1,3 +1,34 @@
 .square_tile {
+	height: 100%;
+	width: 100%;
+}
+
+.square_board_row {
+}
+
+.square_board_tile {
 	border: 2px solid black;
+	height: 75px;
+}
+
+.red_tile {
+	background-color: red;
+}
+
+.blue_tile {
+	background-color: blue;
+}
+
+.victory_tile {
+	animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0.55; }
+}
+
+.gameboard {
+	height: 50%;
+	width: 80%;
+	margin: 10%;
 }
