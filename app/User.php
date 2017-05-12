@@ -28,6 +28,6 @@ class User extends Authenticatable
     ];
 
     public function gameTestsquares() {
-        return $this->hasMany('App\GameTestsquares');
+        return $this->belongsToMany('App\GameTestsquare', 'game_testsquare_user')->withPivot('player_number');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\GameTestsquare
+use App\GameTestsquare;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,8 +46,8 @@ class gameTestsquareController extends Controller
     		if ($request->has('name')) {
     			$game = new GameTestsquare;
     			$game->name = $request->name;
-    			$spell->save();
-    			return redirect()->route('/play/testsquare.show', ['id' => $spell->id]);
+    			$game->save();
+    			return redirect('/play/testsquare/'.$game->id);
     		} else {
     			return back();
     		}
@@ -63,7 +63,19 @@ class gameTestsquareController extends Controller
     public function show($id)
     {
     	if(Auth::check()) {
-
+            $game =  GameTestsquare::findOrFail($id);
+    		if(!($gamePlayer = Auth::user()->gameTestsquares()->where('game_testsquare_id', $id)->get())) {
+                $new_num = 1;
+                if ($users = $game->users()->get()) {
+                    foreach ($users as $user) {
+                        $new_num = max($user->pivot->player_number + 1, $new_num);
+                    }
+                    $new_num = $hpm->pivot->player_number + 1;
+                }
+                Auth::user()->attach($id, ['player_number' => $new_num]);
+                $gamePlayer = $game->users()->where('user_id', Auth::user()->id)->get()->first();
+            }
+            return view('gameboard.implementations.testsquare', ['playernum' => $gamePlayer->pivot->player_number, 'gamenum' => $id]);
     	}
     	return redirect()->route('home');
     }

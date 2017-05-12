@@ -13,7 +13,7 @@ class CreateGameTestsquareTable extends Migration
      */
     public function up()
     {
-        Schema::create('gameTestsquares', function(Blueprint $table){
+        Schema::create('game_testsquares', function(Blueprint $table){
             $table->increments('id');
             $table->timestamps();
             $table->integer('turn_number')->default(1);
@@ -21,10 +21,10 @@ class CreateGameTestsquareTable extends Migration
             $table->unique('name');
         });
 
-        Schema::create('gameTestsquare_user', function(Blueprint $table){
+        Schema::create('game_testsquare_user', function(Blueprint $table){
             $table->increments('id');
             $table->timestamps();
-            $table->integer('gameTestsquare_id')->unsigned();
+            $table->integer('game_testsquare_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('player_number')->signed();
         });
@@ -37,7 +37,7 @@ class CreateGameTestsquareTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gameTestsquares');
-        Schema::dropIfExists('gameTestsquare_user');
+        Schema::dropIfExists('game_testsquares');
+        Schema::dropIfExists('game_testsquare_user');
     }
 }
