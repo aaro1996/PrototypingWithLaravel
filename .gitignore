@@ -14,3 +14,4 @@ app/Http/Controllers/GitController.php
 /public/css
 /public/js
 /public/fonts
+/public/mix-manifest.json
