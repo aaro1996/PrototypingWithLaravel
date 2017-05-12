@@ -11,6 +11,7 @@
 |
 */
 
+Auth::routes();
 
 Route::post('/githook', 'GitController@gitpull');
 
@@ -25,3 +26,7 @@ Route::get('/jdlink', function () {
 Route::get('/testsquare', function() {
 	return view('gameboard.implementations.testsquare');
 });
+
+Route::resource('/play/testsquare', 'gameTestsquareController');
+
+Route::get('/home', 'HomeController@index')->name('home');
