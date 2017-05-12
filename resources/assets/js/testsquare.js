@@ -21,7 +21,7 @@ function init() {
 			board_arr[i][j].cell.setAttribute('data-y', i);
 			board_arr[i][j].cell.addEventListener('click', function(e) {
 				handle_click(parseInt(e.currentTarget.getAttribute('data-x')), parseInt(e.currentTarget.getAttribute('data-y')));
-			})
+			});
 		}
 	}
 	turn_count = 0;
