@@ -31,7 +31,6 @@ function init() {
 
 
 function handle_click(column_number, row_number) {
-	// break if the game isn't going, I.E. did someone win
 	make_move(column_number);
 	return;
 }
@@ -140,8 +139,8 @@ function check_victory(row, col) {
 				game_running = false;
 				for (var i = 0; i < 4; i++) {
 					board_arr[row + y][col + x].cell.classList.add('victory_tile');
-					x++;
-					y--;
+					x--;
+					y++;
 				}
 				return;
 			}
@@ -169,8 +168,8 @@ function check_victory(row, col) {
 				game_running = false;
 				for (var i = 0; i < 4; i++) {
 					board_arr[row + y][col + x].cell.classList.add('victory_tile');
-					x--;
-					y++;
+					x++;
+					y--;
 				}
 				return;
 			}
