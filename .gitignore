@@ -17,3 +17,4 @@ app/Http/Controllers/GitController.php
 /public/mix-manifest.json
 config/database.php
 /storage/games
+laravel-echo-server.json
