@@ -15,3 +15,4 @@ app/Http/Controllers/GitController.php
 /public/js
 /public/fonts
 /public/mix-manifest.json
+app/config/database.php
