@@ -74,6 +74,7 @@ class gameTestsquareController extends Controller
                 }
                 Auth::user()->attach($id, ['player_number' => $new_num]);
                 $gamePlayer = $game->users()->where('user_id', Auth::user()->id)->get()->first();
+                error_log($gamePlayer);
             }
             return view('gameboard.implementations.testsquare', ['playernum' => $gamePlayer->pivot->player_number, 'gamenum' => $id]);
     	}
