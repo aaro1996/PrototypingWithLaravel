@@ -15,6 +15,5 @@ app/Http/Controllers/GitController.php
 /public/js
 /public/fonts
 /public/mix-manifest.json
-config/database.php
 /storage/games
 laravel-echo-server.json
