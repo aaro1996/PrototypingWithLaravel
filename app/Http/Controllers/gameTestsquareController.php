@@ -64,17 +64,17 @@ class gameTestsquareController extends Controller
     {
     	if(Auth::check()) {
             $game =  GameTestsquare::findOrFail($id);
-    		if(!($gamePlayer = Auth::user()->gameTestsquares()->where('game_testsquare_id', $id)->get())) {
+            $gameplayer = null;
+    		if(!($gamePlayer = $game->users()->where('user_id', Auth::user()->id)->first())) {
                 $new_num = 1;
                 if ($users = $game->users()->get()) {
                     foreach ($users as $user) {
                         $new_num = max($user->pivot->player_number + 1, $new_num);
                     }
-                    $new_num = $hpm->pivot->player_number + 1;
                 }
-                Auth::user()->attach($id, ['player_number' => $new_num]);
-                $gamePlayer = $game->users()->where('user_id', Auth::user()->id)->get()->first();
-                error_log($gamePlayer);
+                error_log($game);
+                $game->users()->attach(Auth::user()->id, ['player_number' => $new_num]);
+                $gamePlayer = $game->users()->where('user_id', Auth::user()->id)->first();
             }
             return view('gameboard.implementations.testsquare', ['playernum' => $gamePlayer->pivot->player_number, 'gamenum' => $id]);
     	}
