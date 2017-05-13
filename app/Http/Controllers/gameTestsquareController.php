@@ -17,6 +17,11 @@ class gameTestsquareController extends Controller
      */
         public function index()
         {
+            if(Auth::check()) {
+                return view('gameboard.implementations.testsquare.list', ['games' => GameTestsquare::get()]);
+            } else {
+                return redirect()->url('/login');
+            }
         }
 
     /**
@@ -84,7 +89,7 @@ class gameTestsquareController extends Controller
                 $game->users()->attach(Auth::user()->id, ['player_number' => $new_num]);
                 $gamePlayer = $game->users()->where('user_id', Auth::user()->id)->first();
             }
-            return view('gameboard.implementations.testsquare', ['playernum' => $gamePlayer->pivot->player_number, 'gamenum' => $id]);
+            return view('gameboard.implementations.testsquare.game', ['playernum' => $gamePlayer->pivot->player_number, 'gamenum' => $id]);
         }
         return redirect()->route('home');
     }

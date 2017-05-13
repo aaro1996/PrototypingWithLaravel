@@ -24,7 +24,7 @@ Route::get('/jdlink', function () {
 });
 
 Route::get('/testsquare', function() {
-	return view('gameboard.implementations.testsquare', ['gamenum' => -1, 'playernum' => -1]);
+	return view('gameboard.implementations.testsquare.game', ['gamenum' => -1, 'playernum' => -1]);
 });
 
 Route::resource('/play/testsquare', 'gameTestsquareController');

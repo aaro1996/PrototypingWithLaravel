@@ -12,6 +12,7 @@
     @yield('header')
 </head>
 <body>
+    @include('layouts.laravel_header')
     <div class="container">
         @yield('content')
     </div>
