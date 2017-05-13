@@ -26,4 +26,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function gameTestsquares() {
+        return $this->belongsToMany('App\GameTestsquare', 'game_testsquare_user')->withPivot('player_number');
+    }
 }
