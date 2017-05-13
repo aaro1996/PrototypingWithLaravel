@@ -19,6 +19,7 @@ class CreateGameTestsquareTable extends Migration
             $table->integer('turn_number')->default(1);
             $table->string('name', 200);
             $table->unique('name');
+            $table->json('data');
         });
 
         Schema::create('game_testsquare_user', function(Blueprint $table){
