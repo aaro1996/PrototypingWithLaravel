@@ -20,7 +20,7 @@ class gameTestsquareController extends Controller
             if(Auth::check()) {
                 return view('gameboard.implementations.testsquare.list', ['games' => GameTestsquare::get()]);
             } else {
-                return redirect()->url('/login');
+                return redirect('/login');
             }
         }
 
