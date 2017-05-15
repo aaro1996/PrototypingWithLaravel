@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('legacy.index');
 });
 
+Route::get('/play', function() {
+	return view('infrastructure.game_list');
+});
+
 Route::get('/jdlink', function () {
     return view('legacy.jdlink');
 });

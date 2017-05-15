@@ -18,7 +18,7 @@ class gameTestsquareController extends Controller
         public function index()
         {
             if(Auth::check()) {
-                return view('gameboard.implementations.testsquare.list', ['games' => GameTestsquare::get()]);
+                return view('layouts.listgames', ['gamename' => 'testsquare', 'games' => GameTestsquare::get()]);
             } else {
                 return redirect('/login');
             }
