@@ -231,6 +231,7 @@ function reset() {
 	turn_count = 0;
 	player_turn = true;
 	game_running = true;
+	document.getElementById('victory_banner').innerHTML = '';	
 	if(playernum > 0) {
 		var xmlHttp = new XMLHttpRequest()
 		xmlHttp.open("PUT", "/play/testsquare/" + gamenum, true);
@@ -264,28 +265,32 @@ function server_response(e) {
 }
 
 function update_game(gamefile) {
-	for(var i = 0; i < y_count; i++) {
-		for (var j = 0; j < x_count; j++) {
-			board_arr[i][j].contents = gamefile.board[i][j].contents;
-			board_arr[i][j].turn_played = gamefile.board[i][j].turn_played;
-			if (gamefile.board[i][j].victory) {
-				board_arr[i][j].cell.classList.add('victory_tile');
-			} else {
-				board_arr[i][j].cell.classList.remove('victory_tile');
-			}
-			if(gamefile.board[i][j].contents == 'red') {
-				board_arr[i][j].cell.classList.add('red_tile');
-			} else {
-				board_arr[i][j].cell.classList.remove('red_tile');
-			}
-			if (gamefile.board[i][j].contents == 'blue') {
-				board_arr[i][j].cell.classList.add('blue_tile');
-			} else {
-				board_arr[i][j].cell.classList.remove('blue_tile');
+	turn_count = gamefile.turn_count;
+	if (turn_count == 0) {
+		reset();	
+	} else {
+		for(var i = 0; i < y_count; i++) {
+			for (var j = 0; j < x_count; j++) {
+				board_arr[i][j].contents = gamefile.board[i][j].contents;
+				board_arr[i][j].turn_played = gamefile.board[i][j].turn_played;
+				if (gamefile.board[i][j].victory) {
+					board_arr[i][j].cell.classList.add('victory_tile');
+				} else {
+					board_arr[i][j].cell.classList.remove('victory_tile');
+				}
+				if(gamefile.board[i][j].contents == 'red') {
+					board_arr[i][j].cell.classList.add('red_tile');
+				} else {
+					board_arr[i][j].cell.classList.remove('red_tile');
+				}
+				if (gamefile.board[i][j].contents == 'blue') {
+					board_arr[i][j].cell.classList.add('blue_tile');
+				} else {
+					board_arr[i][j].cell.classList.remove('blue_tile');
+				}
 			}
 		}
 	}
-	turn_count = gamefile.turn_count;
 	player_turn = gamefile.player_turn;
 	game_running = gamefile.game_running;
 }
