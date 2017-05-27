@@ -62,10 +62,10 @@ class gameTestsquareController extends Controller
                 $game->save();
                 return redirect('/play/testsquare/'.$game->id);
             } else {
-               return back();
-           }
-       }
-   }
+             return back();
+         }
+     }
+ }
 
     /**
      * Display the specified resource.
@@ -255,34 +255,61 @@ class gameTestsquareController extends Controller
             $game->data = json_encode(['board' => $board_arr, 'turn_count' => 0, 'player_turn' => true, 'game_running' => true]);
             $game->save();
         }
+
+
+
         if (!Auth::check()) {
             return redirect()->route('home');
         }
+
+
+
         $json_input = json_decode(file_get_contents("php://input"), true);
-        $gamefile = json_decode(GameTestsquare::findOrFail($id)->data, true);
+
+
+
         switch($json_input['mtype']) {
             case 'poll':
-            if ($json_input['turnnumber'] != $gamefile['turn_count']) {
-                return response()->json(['mtype' => 'update_game', 'gamefile' => $gamefile]);;
-            } else {
+            $tempgame = GameTestsquare::findOrFail($id);
+            if ($json_input['turnnumber'] == $tempgame->turn_number) {
                 return response()->json(['mtype' => 'wait']);
+            } else if ($json_input['turnnumber'] == ($tempgame->turn_number - 1)) {
+                return response()->json(['mtype' => 'make_move', 'column' => $tempgame->last_move]);
+            } else {
+                $gamefile = json_decode($tempgame->data, true);
+                return response()->json(['mtype' => 'update_game', 'gamefile' => $gamefile]);;
             }
             break;
+
+
+
             case 'move':
+            $tempgame = GameTestsquare::findOrFail($id);
+            $gamefile = json_decode($tempgame->data, true);
             $move = move($json_input['column'], $gamefile, $id);
+
             if ($move) {
-                $tempgame = GameTestsquare::findOrFail($id);
+                $tempgame->last_move = $json_input['column'];
                 $tempgame->data = json_encode($move);
+                $tempgame->turn_number = $move['turn_count'];
                 $tempgame->save();
                 return response()->json(['mtype' => 'wait']);
             } else {
                 return response()->json(['mtype' => 'update_game', 'gamefile' => $gamefile]);
             }
             break;
+
+
+
+
             case 'reset':
             reset($id);
             return response()->json(['mtype' => 'wait']);
             break;
+
+
+
+
             default:
             break;
         }

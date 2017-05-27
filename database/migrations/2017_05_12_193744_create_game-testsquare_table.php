@@ -20,6 +20,7 @@ class CreateGameTestsquareTable extends Migration
             $table->string('name', 200);
             $table->unique('name');
             $table->json('data');
+            $table->integer('last_move')->default(-1);
         });
 
         Schema::create('game_testsquare_user', function(Blueprint $table){

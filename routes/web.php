@@ -23,6 +23,10 @@ Route::get('/play', function() {
 	return view('infrastructure.game_list');
 });
 
+Route::get('/testhex', function() {
+	return view('gameboard.implementations.testhex.game');
+});
+
 Route::get('/jdlink', function () {
     return view('legacy.jdlink');
 });

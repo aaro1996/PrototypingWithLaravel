@@ -79,7 +79,7 @@ function make_move(column_number) {
 		if (playernum == 1) {send_move(column_number);}
 		return;
 	} else {
-		// would do nothing here if working over the server
+		// while working through the server this is called by the server's response
 		if (board_arr[0][column_number].contents !== 'empty') {
 			return;
 		}
@@ -253,13 +253,19 @@ function poll() {
 
 function server_response(e) {
 	var serverJSON = JSON.parse(e.target.responseText);
+	console.log('recieved_response');
 	switch(serverJSON.mtype) {
 		case 'wait':
 		break;
 		case 'update_game':
-		console.log('server responded: ' + serverJSON);
 		update_game(serverJSON.gamefile);
 		break;
+		case 'make_move':
+		console.log('making_move');
+		make_move(parseInt(serverJSON.column));
+		console.log('recovering');
+		break;
+
 	}
 
 }
