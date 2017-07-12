@@ -37,4 +37,8 @@ Route::get('/testsquare', function() {
 
 Route::resource('/play/testsquare', 'gameTestsquareController');
 
+Route::get('/playi/testsquare', function() {
+	return view('gameboard.implementations.testsquare.game', ['gamenum' => -2, 'playernum' => 1]);
+});
+
 Route::get('/home', 'HomeController@index')->name('home');

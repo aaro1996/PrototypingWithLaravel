@@ -24,6 +24,10 @@
 	animation: blinker 1s linear infinite;
 }
 
+.future_tile {
+    background-color: white;
+}
+
 @keyframes blinker {  
 	50% { opacity: 0.55; }
 }

@@ -21,6 +21,8 @@
 	@include('gameboard.framework.boards.square', ['x_count' => 7, 'y_count' => 6, 'board_id' => 'testsquare'])
 	<h1 id="victory_banner"> </h1>
 	<button id="reset_button"> Restart Game </button>
+	<button id="next_button"> Show Next Move </button>
+	<button id="prev_button"> Show Previous Move </button>
 @endsection
 @section('js-footer')
 	<script src="/js/testsquare.js"></script>

@@ -10,19 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class gameTestsquareController extends Controller
 {
-        /**
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-        public function index()
-        {
-            if(Auth::check()) {
-                return view('layouts.listgames', ['gamename' => 'testsquare', 'games' => GameTestsquare::get()]);
-            } else {
-                return redirect('/login');
-            }
+    public function index()
+    {
+        if(Auth::check()) {
+            return view('layouts.listgames', ['gamename' => 'testsquare', 'games' => GameTestsquare::get()]);
+        } else {
+            return redirect('/login');
         }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -62,10 +63,10 @@ class gameTestsquareController extends Controller
                 $game->save();
                 return redirect('/play/testsquare/'.$game->id);
             } else {
-             return back();
-         }
-     }
- }
+               return back();
+           }
+       }
+   }
 
     /**
      * Display the specified resource.
@@ -256,17 +257,18 @@ class gameTestsquareController extends Controller
             $game->save();
         }
 
-
-
-        if (!Auth::check()) {
-            return redirect()->route('home');
+        function playAI($string)
+        {
+            return ((int)shell_exec("/usr/bin/java -cp /home/ahandleman/laravel_dev/PrototypingWithLaravel/storage/ai/testsquare/ HelloWorld ".$string) - 1);
         }
 
 
 
         $json_input = json_decode(file_get_contents("php://input"), true);
 
-
+        if (!Auth::check()) {
+            return redirect()->route('home');
+        }
 
         switch($json_input['mtype']) {
             case 'poll':
@@ -277,11 +279,13 @@ class gameTestsquareController extends Controller
                 return response()->json(['mtype' => 'make_move', 'column' => $tempgame->last_move]);
             } else {
                 $gamefile = json_decode($tempgame->data, true);
-                return response()->json(['mtype' => 'update_game', 'gamefile' => $gamefile]);;
+                return response()->json(['mtype' => 'update_game', 'gamefile' => $gamefile]);
             }
             break;
 
-
+            case 'moveai':
+            return response()->json(['mtype' => 'make_move', 'column' => playAI($json_input['gamestring'])]);
+            break;
 
             case 'move':
             $tempgame = GameTestsquare::findOrFail($id);
@@ -326,4 +330,6 @@ class gameTestsquareController extends Controller
     public function destroy($id)
     {
     }
+
+
 }

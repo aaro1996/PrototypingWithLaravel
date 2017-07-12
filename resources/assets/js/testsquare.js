@@ -9,6 +9,7 @@ var gamenum = parseInt(document.getElementById('game_vals').getAttribute('data-g
 var playernum = parseInt(document.getElementById('game_vals').getAttribute('data-playernumber'));
 var board_arr = [];
 var turn_count;
+var displayed_turn
 var pollInterval;
 
 function init() {
@@ -32,14 +33,51 @@ function init() {
 			reset();
 		}
 	});
+	document.getElementById('next_button').addEventListener('click', function(e) {
+		if (displayed_turn < turn_count) {
+			displayed_turn++;
+		}
+		update_shown();
+	});
+	document.getElementById('prev_button').addEventListener('click', function(e) {
+		if (displayed_turn > 0) {
+			displayed_turn--;
+		}
+		update_shown();
+	});
 	turn_count = 0;
+	displayed_turn = 0;
 	player_turn = true;
 	game_running = true;
-	pollInterval = setInterval(function(){poll();}, 1000);
+	if (gamenum >= 0) {
+		pollInterval = setInterval(function(){poll();}, 1000);
+
+	}
 }
 
+function update_shown() {
+	for(var i = 0; i < y_count; i++) {
+		for (var j = 0; j < x_count; j++) {
+			if (board_arr[i][j].turn_played > displayed_turn) {
+				board_arr[i][j].cell.classList.add('future_tile');
+			} else {
+				board_arr[i][j].cell.classList.remove('future_tile');
+				if (board_arr[i][j].turn_played == turn_count) {
+					check_victory(i, j);
+				}
+			}
+			if (displayed_turn != turn_count) {
+				board_arr[i][j].cell.classList.remove('victory_tile');
+			}
+		}
+	}
+	console.log(displayed_turn);
+}
 
 function handle_click(column_number, row_number) {
+	if (displayed_turn != turn_count) {
+		return;
+	}
 	switch(playernum) {
 		case -1:
 		make_move(column_number);
@@ -75,7 +113,8 @@ function make_move(column_number) {
 		board_arr[row_number][column_number].contents = 'blue';
 		board_arr[row_number][column_number].cell.classList.add('blue_tile');
 		board_arr[row_number][column_number].turn_played = turn_count;
-		check_victory(row_number, column_number);
+		displayed_turn++;
+		update_shown();
 		if (playernum == 1) {send_move(column_number);}
 		return;
 	} else {
@@ -91,7 +130,8 @@ function make_move(column_number) {
 		board_arr[row_number][column_number].contents = 'red';
 		board_arr[row_number][column_number].cell.classList.add('red_tile');
 		board_arr[row_number][column_number].turn_played = turn_count;
-		check_victory(row_number, column_number);
+		displayed_turn++;
+		update_shown();
 		if (playernum == 2) {send_move(column_number);}
 		return;
 	}
@@ -270,6 +310,21 @@ function server_response(e) {
 
 }
 
+function get_gamestring() {
+	var gamestring = "";
+	for(var k = 1; k <= turn_count; k++) {
+		for(var i = 0; i < y_count; i++) {
+			for (var j = 0; j < x_count; j++) {
+				if (board_arr[i][j].turn_played == k) {
+					gamestring += ("" + j);
+				}
+			}
+		}
+	}
+	console.log(gamestring);
+	return gamestring;
+}
+
 function update_game(gamefile) {
 	turn_count = gamefile.turn_count;
 	if (turn_count == 0) {
@@ -299,6 +354,7 @@ function update_game(gamefile) {
 	}
 	player_turn = gamefile.player_turn;
 	game_running = gamefile.game_running;
+	update_shown();
 }
 
 function send_move(column_number) {
@@ -307,7 +363,12 @@ function send_move(column_number) {
 	xmlHttp.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 	xmlHttp.setRequestHeader('X-CSRF-TOKEN', document.getElementById('csrf-token').getAttribute('content'));
 	xmlHttp.addEventListener("load", server_response, false);
-	xmlHttp.send(JSON.stringify({mtype: 'move', column: column_number}));
+	if(gamenum < 0) {
+		xmlHttp.send(JSON.stringify({mtype: 'moveai', gamestring: get_gamestring()}));
+	} else {
+		xmlHttp.send(JSON.stringify({mtype: 'move', column: column_number}));
+
+	}
 }
 
 init();

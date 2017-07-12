@@ -4,6 +4,11 @@
 
 using namespace std;
 
-int main() {
-	cout << "Testing123\n" << flush;
+int main(int argc, char* argv[]) {
+	if (argc != 2) {
+		cout << "failed\n" << flush;
+	} else {
+		cout << argv[1] << flush;
+	}
+	
 }
